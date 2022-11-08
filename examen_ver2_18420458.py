@@ -44,7 +44,7 @@ resive_municipio('Jiquilpan')
 # (d_codigo), y Municipio (D_mnpio). El archivo deberá contener todos los
 # códigos que pertenezcan al estado.
 
-def codigospostales2(estado):
+def resive_estado(estado):
     try:
         fin = {}
         arch = open('CPdescarga.txt', 'r')
@@ -70,4 +70,4 @@ def codigospostales2(estado):
     retornoList = json.dumps(fin)
     print(retornoList)
 
-codigospostales2("Michoacán de Ocampo")
+resive_estado("Michoacán de Ocampo")
