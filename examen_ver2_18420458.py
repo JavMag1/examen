@@ -12,38 +12,30 @@ from logging import exception
 # y zona (d_zona).
 
 def resive_municipio(municipio):
-
     try:
-        codigosP={}
+        aux={}
         arch = open('CPdescarga.txt', 'r')
         cad = arch.read()
         cad = cad.replace('||', '| |')
         lista = cad.split("\n")
     except exception as Error:
         print(f"no existe el archivo {arch}")
-    else:
-        arch.close()
+    arch.close()
     i = 1
     for x in lista:
-            list = {}
-            mnpaux = x.split("|")
-            if len(mnpaux) > 1:
-                if mnpaux[3] == municipio:
-                    list["d_codigo"] = mnpaux[0]
-                    list["d_tipo_asenta"] = mnpaux[2]
-                    list["d_zona"] = mnpaux[-2]
-                    codigosP[f"{i}"] = list
-                    i = i + 1
+        mnpaux = x.split("|")
+        list = {}
 
-
-
-
-
-
-    return json.dumps(list)
-print(resive_municipio("jiquilpan"))
-
-
+        if len(mnpaux) > 1:
+            if mnpaux[3] == municipio:
+                list["d_codigo"] = mnpaux[0]
+                list["d_tipo_asenta"] = mnpaux[2]
+                list["d_zona"] = mnpaux[-2]
+                aux[f"{i}"] = list
+                i = i + 1
+    returnolist = json.dumps(aux)
+    print(returnolist)
+resive_municipio('Jiquilpan')
 
 
 
@@ -51,3 +43,31 @@ print(resive_municipio("jiquilpan"))
 # de Ocampo”, grabe en un archivo en formato JSON: Código Postal
 # (d_codigo), y Municipio (D_mnpio). El archivo deberá contener todos los
 # códigos que pertenezcan al estado.
+
+def codigospostales2(estado):
+    try:
+        fin = {}
+        arch = open('CPdescarga.txt', 'r')
+        cad = arch.read()
+        cad = cad.replace('||', '| |')
+        lista = cad.split("\n")
+    except exception as Error:
+        print(f"no existe el archivo {arch}")
+
+    arch.close()
+
+    retornoList = []
+
+    for mnp in lista:
+        codigos = mnp.split("|")
+        cp = {}
+        if len(codigos)>1 :
+            if codigos[4] == estado:
+                cp["d_codigo"] = codigos[0]
+                cp["D_mnpio"] = codigos[3]
+                retornoList.append(cp)
+    fin[estado] = retornoList
+    retornoList = json.dumps(fin)
+    print(retornoList)
+
+codigospostales2("Michoacán de Ocampo")
